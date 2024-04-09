@@ -179,8 +179,8 @@ def format_table(html):
     return html
 
 
-def create_excel_specification(request):
-    id = request.COOKIES['id']
+def create_excel_specification(request, order_id):
+    id = order_id
     table = Table.objects.get(id=id)
     html = Table.objects.get(id=id).html
     html = format_table(html)
@@ -191,7 +191,8 @@ def create_excel_specification(request):
     }
     template = loader.get_template('polls/to_excel.html')
     html = template.render(context_temp)
-    with open(str(settings.BASE_DIR) + '\\polls\\to_excel.html', 'w', encoding='utf-8') as file:
+    path = settings.BASE_DIR / 'polls/to_excel.html'
+    with open(str(path), 'w', encoding='utf-8') as file:
         file.write(html)
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = f'attachment; filename=specification-{id}-{datetime.now().strftime("%y-%m-%d %H-%M-%S")}.xlsx'
@@ -224,8 +225,8 @@ def link_callback(uri, rel):
     return path
 
 
-def create_pdf_specification(request):
-    id = request.COOKIES['id']
+def create_pdf_specification(request, order_id):
+    id = order_id
     table = Table.objects.get(id=id)
     html = format_table(table.html)
     context_temp = {
@@ -235,8 +236,6 @@ def create_pdf_specification(request):
     }
     template = loader.get_template('polls/to_pdf.html')
     html = template.render(context_temp)
-    # return HttpResponse(template.render(context_temp, request))
-    # pisaFileObject.getNamedFile = lambda self: self.uri
 
     with BytesIO() as result:
         pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result, encoding="utf-8", link_callback=link_callback)

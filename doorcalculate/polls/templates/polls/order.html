@@ -304,12 +304,12 @@
 <button type="button" id="add">Додати двері</button>
 </br>
 </br>
-<form method="post" action="{% url 'create_excel_specification' %}">
+<form method="post" action="{% url 'create_excel_specification' table.id %}">
     {% csrf_token %}
     <button type="submit">Завантажити Excel</button>
 </form>
 
-<form method="get" action={% url 'create_pdf_specification' %}>
+<form method="get" action={% url 'create_pdf_specification' table.id %}>
     <button type="submit" id="gen-pdf">Завантажити PDF</button>
 </form>
 
