@@ -1,0 +1,59 @@
+{% load static %}
+<link rel="shortcut icon" type="image/ico" href="{% static 'media/icon.ico' %}">
+<link rel="stylesheet" href="{% static 'css/order_list.css' %}">
+
+<div class="inline">
+<form method="post" action="{% url 'new_order' %}">
+	{% csrf_token %}
+	<button type="submit" id="new">Нове замовлення</button>
+</form>
+{% include "./login_base.html" %}
+</div>
+<div class="order-list">
+    {% if order_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Номер замовлення</th>
+                    <th>Замовник</th>
+                    <th>Контакт</th>
+                    <th>Місто</th>
+                    <th>Ціна</th>
+                    <th>Валюта</th>
+                    <th>Видалити замовлення</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in order_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'order' order.id %}">{{ order.order_number }}</a>
+                    </td>
+                    <td>
+                        <p>{{ order.client }}</a>
+                    </td>
+                    <td>
+                        <p>{{ order.client_contact }}</p>
+                    </td>
+                    <td>
+                        <p>{{ order.city }}</p>
+                    </td>
+                    
+                    <td>
+                        <span>{{ order.remainder }}</span>
+                    </td>
+                    <td>Грн</td>
+                    <td>
+                        <form method="post" action="{% url 'remove_order' order.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Видалити</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    
+
+</div>
