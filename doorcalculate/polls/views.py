@@ -40,7 +40,7 @@ def index(request):
         'order_list': order_list
     }
     return HttpResponse(template.render(context=context, request=request))
-    
+
 
 
 @login_required
@@ -197,7 +197,7 @@ def create_excel_specification(request, order_id):
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = f'attachment; filename=specification-{id}-{datetime.now().strftime("%y-%m-%d %H-%M-%S")}.xlsx'
 
-    file = excel.create('\\polls\\to_excel.html')
+    file = excel.create('/polls/to_excel.html')
     response.write(file)
 
     return response
