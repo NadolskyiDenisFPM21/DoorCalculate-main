@@ -15,7 +15,9 @@
 
 
 <div class="form-pdf" id="form-pdf">
-    <h3>Бланк замовлення №: <input type="text" value="{{table.order_number}}" class="info-value" id="order-number"></h3>
+    <div class="header">
+        <div class="enter-header">
+            <h3>Бланк замовлення №: <input type="text" value="{{table.order_number}}" class="info-value" id="order-number"></h3>
     <div class="manager">
         <div>Менеджер: {{user.get_full_name}} Номер менеджера: {{user.get_username}}</div>
     </div>
@@ -25,7 +27,9 @@
         {% csrf_token %}
         <button type="submit" id="new">Нове замовлення</button>
     </form>
+        </div>
 
+    </div>
     <div class="content">
         {% if html %}
             {{ html|safe }}

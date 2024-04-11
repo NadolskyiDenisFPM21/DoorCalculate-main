@@ -67,6 +67,26 @@ td {
     text-align: center;
 }
 
-td{
+td {
     width: 12em;
+}
+
+.logos {
+
+    img {
+        height: 5em;
+    }
+}
+
+
+.cm-a,
+.cm-a:hover {
+    all: unset;
+    cursor: pointer;
+    text-decoration: underline;
+
+}
+
+.bold {
+    font-weight: bold;
 }
