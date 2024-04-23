@@ -179,15 +179,18 @@ def format_table(html):
     return html
 
 
+@login_required
 def create_excel_specification(request, order_id):
     id = order_id
     table = Table.objects.get(id=id)
+    user = User.objects.get(username=table.manager)
     html = Table.objects.get(id=id).html
     html = format_table(html)
     context_temp = {
         'html': html,
         'table': table,
-        'prepayment_value': table.prepayment*table.total_ex_vat/100
+        'prepayment_value': table.prepayment*table.total_ex_vat/100,
+        'user': user
     }
     template = loader.get_template('polls/to_excel.html')
     html = template.render(context_temp)
@@ -225,14 +228,18 @@ def link_callback(uri, rel):
     return path
 
 
+@login_required
 def create_pdf_specification(request, order_id):
     id = order_id
+
     table = Table.objects.get(id=id)
     html = format_table(table.html)
+    user = User.objects.get(username=table.manager)
     context_temp = {
         'html': html,
         'table': table,
-        'prepayment_value': table.prepayment*table.total_ex_vat/100
+        'prepayment_value': table.prepayment*table.total_ex_vat/100,
+        'user': user
     }
     template = loader.get_template('polls/to_pdf.html')
     html = template.render(context_temp)

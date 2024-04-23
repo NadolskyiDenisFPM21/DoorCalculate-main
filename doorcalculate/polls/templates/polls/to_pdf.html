@@ -48,9 +48,7 @@
 
 <h3>Бланк замовлення №
 	{{ table.order_number }}</h3>
-<div>Менеджер:
-	{{user.get_full_name}}</div>
-<div>{{user.get_username}}</div>
+<div>Менеджер: {{user.get_full_name}} Номер менеджера: {{user.get_username}}</div>
 
 {% if html %}
 {{html|safe}}
@@ -72,7 +70,7 @@
 	<div class='info'>
 		<span>Всього за дверні блоки: {{table.total}} грн</span></br>
 		<span>Знижка:{{table.sale}}%</span></br>
-		<span>Усього, з урахуванням знижки: {{table.total_with_sale}} грн</span></br>
+		<span>Всього, з урахуванням знижки: {{table.total_with_sale}} грн</span></br>
 		<span>Доставка на склад (об'єкт) без вивантаження та занесення на поверх: {{table.delivery}} грн</span></br>
 		<span>Монтаж за 1 блок:{{table.install}}грн</span></br><span>Заміри: {{table.measurements}} грн</span></br>
 		<span>Всього за послуги: {{table.poslugy}} грн</span></br>
@@ -104,5 +102,12 @@
 </tr>
 </table>
 
+
+
 <img src="/static/opening.jpg" class="opening-img">
 <span><img src="/static/opening-2.jpg" class="opening-img"></span>
+
+<div>
+    <h3>Замовник___________________</h3>
+    <h3>Менеджер___________________</h3>
+</div>

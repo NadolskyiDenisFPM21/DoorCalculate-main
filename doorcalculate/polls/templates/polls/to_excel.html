@@ -1,8 +1,19 @@
-<h3>Бланк замовлення №
+<table>
+    <tr>
+        <td colspan="21">
+            <h3>Бланк замовлення №
 	{{ table.order_number }}</h3>
-<div>Менеджер:
-	{{table.manager}}</div>
-<div>{{table.manager_phone}}</div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="21">
+            <div>Менеджер: {{user.get_full_name}} Номер менеджера: {{user.get_username}}</div>
+        </td>
+    </tr>
+</table>
+
+
+
 
 {% if html %}
 {{html|safe}}
