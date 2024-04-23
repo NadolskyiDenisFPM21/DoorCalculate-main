@@ -15,7 +15,7 @@ class ProductResource(resources.ModelResource):
 @admin.register(DoorBlock)
 class DoorBlockAdmin(ImportExportActionModelAdmin):
     resource_class = ""
-    list_display = ('id', 'model', 'width', 'height', 'price')
+    list_display = ('id', 'model', 'width', 'height', 'price', 'diller_price')
     
 @admin.register(Frame)
 class FrameAdmin(admin.ModelAdmin):

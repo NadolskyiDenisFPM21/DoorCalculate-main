@@ -196,3 +196,7 @@ textarea {
         margin-left: 1em;
     }
 }
+
+.select_price_type {
+    width: 15em;
+}

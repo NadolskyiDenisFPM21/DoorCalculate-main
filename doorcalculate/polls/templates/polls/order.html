@@ -37,6 +37,7 @@
             <table id="table">
                 <thead>
                     <tr>
+                        <th class='cell' rowspan="3">№</th>
                         <th class='cell' rowspan="3">Модель</th>
                         <th class='cell' rowspan="3">Тип коробу</th>
                         <th class='cell td-opening' rowspan="3">Відкривання</th>
@@ -146,7 +147,14 @@
                 </span>
                 </br>
                 <label for="note">Примітка:</label></br>
-                <textarea resize="none" name="note" id="note" rows="8" cols="70" class="info-value" value="{{table.note}}"></textarea>
+                <textarea resize="none" name="note" id="note" rows="8" cols="70" class="info-value" value="{{table.note}}"></textarea><br>
+                {% if is_diller_manager %}
+                    <label for='price_type' class='bold'>Тип ціни:</label>
+                    <select name="price_type" id="price-type" class="select_price_type get-data">
+                        <option value='diller'>Ціни для дилера</option>
+                        <option value='rrc'>РРЦ</option>
+                    </select>
+                {% endif %}
             </div>
         </div>
     </div>

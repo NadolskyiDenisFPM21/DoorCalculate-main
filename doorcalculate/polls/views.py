@@ -48,6 +48,8 @@ def order(request, order_id):
     door_block_list = DoorBlock.objects.all().order_by('model')
     template = loader.get_template('polls/order.html')
     id: int
+    user = User.objects.get(username=request.user)
+    is_diller_manager = user.groups.filter(name='diller_manager').exists()
     try:
         id = order_id
         obj = Table.objects.filter(id=id).last()
@@ -59,7 +61,8 @@ def order(request, order_id):
         'door_block_list': door_block_list,
         'html': None,
         'date': timezone.now().strftime("%Y-%m-%d"),
-        'table': None
+        'table': None,
+        'is_diller_manager': is_diller_manager
     }
     if obj:
         context['order_id'] = obj.id
@@ -126,7 +129,7 @@ def get_door_info(request):
     height_d = request.GET.get('height')
     frame_model = request.GET.get('frame')
     frame_id = Frame.objects.get(model=frame_model)
-    data = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d, frame=frame_id).values('price', 'al_banding_canvas', 'profile_frame_color', 'seal_color', 'is_primed')
+    data = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d, frame=frame_id).values('price', 'al_banding_canvas', 'profile_frame_color', 'seal_color', 'is_primed', 'diller_price')
 
     return JsonResponse(list(data), safe=False)
 

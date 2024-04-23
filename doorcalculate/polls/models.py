@@ -23,6 +23,7 @@ class DoorBlock(models.Model):
     seal_color = models.CharField(max_length=50)
     is_primed = models.CharField(max_length=50)
     price = models.IntegerField()
+    diller_price = models.IntegerField()
 
     def __str__(self) -> str:
         return self.model
