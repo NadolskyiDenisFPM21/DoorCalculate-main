@@ -15,7 +15,11 @@ $(document).change(function () {
                 success: function (data) {
                     var price = $('#price');
                     price.empty();
-                    price.append(data[0].price);
+                    if ($('#price-type') && $('#price-type').val() == 'diller') {
+                        price.append(data[0].diller_price);
+                    } else {
+                        price.append(data[0].price);
+                    }
 
                     var al_band_canv = $('#al-band-canvas');
                     al_band_canv.empty();
@@ -31,9 +35,9 @@ $(document).change(function () {
                     is_primed.append(data[0].is_primed);
                     var furn_color = $('#furn-color');
                     furn_color.empty();
-                    if(data[0].seal_color=="Чорний"){
+                    if (data[0].seal_color == "Чорний") {
                         furn_color.append("Чорний");
-                    }else{
+                    } else {
                         furn_color.append("Мат.хром");
                     }
 
