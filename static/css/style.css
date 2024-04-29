@@ -140,7 +140,7 @@ select {
 
 .opening-img2 {
     width: 70%;
-    transform: translate(15em, -9em);
+    transform: translate(4em, -7em);
 }
 
 #select-model {
@@ -195,8 +195,4 @@ textarea {
         margin-right: 1em;
         margin-left: 1em;
     }
-}
-
-.select_price_type {
-    width: 15em;
 }

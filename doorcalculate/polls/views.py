@@ -72,6 +72,8 @@ def order(request, order_id):
 
     return HttpResponse(template.render(context, request))
 
+
+@login_required
 def new_order(request):
     user = User.objects.get(username=request.user.get_username())
     new = Table.objects.create(html = '',
@@ -86,10 +88,13 @@ def new_order(request):
     total_ex_vat = 0,
     prepayment = 0,
     remainder = 0,
-    manager=user
+    manager=user,
     )
     id = new.id
-
+    user = User.objects.get(username=request.user)
+    is_diller_manager = user.groups.filter(name='diller_manager').exists()
+    if not is_diller_manager:
+        new.is_set_price_type = True
     new.save()
     return redirect(f'/order/{id}/')
 
@@ -128,10 +133,22 @@ def get_door_info(request):
     width_d = request.GET.get('width')
     height_d = request.GET.get('height')
     frame_model = request.GET.get('frame')
+    order_id = request.GET.get('order_id')
     frame_id = Frame.objects.get(model=frame_model)
-    data = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d, frame=frame_id).values('price', 'al_banding_canvas', 'profile_frame_color', 'seal_color', 'is_primed', 'diller_price')
+    table = Table.objects.filter(id=int(order_id)).values('price_type')
+    price_type = table[0]['price_type']
+    door_info = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d, frame=frame_id).values('price', 'al_banding_canvas', 'profile_frame_color', 'seal_color', 'is_primed', 'diller_price')
 
-    return JsonResponse(list(data), safe=False)
+    data = [{
+        'al_banding_canvas': door_info[0]['al_banding_canvas'],
+        'profile_frame_color': door_info[0]['profile_frame_color'],
+        'seal_color': door_info[0]['seal_color'],
+        'is_primed': door_info[0]['is_primed'],
+    }]
+    
+    data[0]['price'] = door_info[0]['price'] if price_type == 'RRC' else door_info[0]['diller_price']
+    
+    return JsonResponse(data, safe=False)
 
 def get_dimensions_aperture(request):
     frame = Frame.objects.get(model=request.GET.get('frame'))
@@ -172,7 +189,6 @@ def get_back_width(request):
         'back_width': back_width,
         'back_height': back_height,
     }
-    print(data)
 
     return JsonResponse(data=data, safe=False)
 
@@ -309,3 +325,13 @@ def set_table(request, order_id):
 
     return JsonResponse(data='', safe=False)
 
+
+def set_price_type(request, order_id):
+    price_type = request.POST.get('price_type')
+    order = Table.objects.get(id=order_id)
+    order.price_type = price_type
+    order.is_set_price_type = True
+    order.save()
+    
+    return redirect(f'/order/{order_id}/')
+    

@@ -19,7 +19,7 @@
         <div class="enter-header">
             <h3>Бланк замовлення №: <input type="text" value="{{table.order_number}}" class="info-value" id="order-number"></h3>
     <div class="manager">
-        <div>Менеджер: {{user.get_full_name}} Номер менеджера: {{user.get_username}}</div>
+        <div>Менеджер: {{user.get_full_name}} Номер: {{user.get_username}}</div>
     </div>
     <div><b>{{date}}</b></div>
 
@@ -148,12 +148,21 @@
                 </br>
                 <label for="note">Примітка:</label></br>
                 <textarea resize="none" name="note" id="note" rows="8" cols="70" class="info-value" value="{{table.note}}"></textarea><br>
-                {% if is_diller_manager %}
-                    <label for='price_type' class='bold'>Тип ціни:</label>
-                    <select name="price_type" id="price-type" class="select_price_type get-data">
-                        <option value='diller'>Ціни для дилера</option>
-                        <option value='rrc'>РРЦ</option>
-                    </select>
+                {% if is_diller_manager and not table.is_set_price_type %}
+                    <form id="price-type-form" method="post" action="{% url "set_price_type" order_id %}">
+                        {% csrf_token %}
+                        <label for='price_type' class='bold'>Тип ціни:</label>
+                        <select name="price_type" class="select_price_type">
+                            <option value='DILLER'>Ціни для дилера</option>
+                            <option value='RRC'>РРЦ</option>
+                        </select>
+                        <button type="submit" id="price-type">Обрати</button>
+                    </form>
+
+                {% else %}
+                    <div>
+                        <p>Тип ціни: {{ table.price_type }}</p>
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -312,8 +321,10 @@
 </table>
 {% endif %}
 </div>
-<p></p>
+<div><p></p></div>
+{% if table.is_set_price_type %}
 <button type="button" id="add">Додати двері</button>
+{% endif %}
 </br>
 </br>
 <form method="post" action="{% url 'create_excel_specification' table.id %}">

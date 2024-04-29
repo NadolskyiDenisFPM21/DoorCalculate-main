@@ -25,4 +25,4 @@ class FrameAdmin(admin.ModelAdmin):
 
 @admin.register(Table)
 class TableAdmin(admin.ModelAdmin):
-    list_display= ('id', 'html')
+    list_display= ('id', 'html', 'manager', 'price_type')

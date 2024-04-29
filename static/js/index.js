@@ -39,26 +39,6 @@ function removeDoor() {
 }
 
 
-function addNumber() {
-    var rows = document.querySelectorAll("#table tbody tr:nth-child(2n-1)");
-
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-
-        // Проверяем, есть ли у текущей строки уже номер
-        var numberExists = row.querySelector(".counter");
-
-        if (!numberExists) {
-            var cellNumber = document.createElement("td");
-            cellNumber.setAttribute("rowspan", "2");
-            cellNumber.textContent = i + 1;
-            cellNumber.classList.add("counter"); // Добавляем класс "counter"
-            row.insertBefore(cellNumber, row.firstChild);
-        }
-
-    }
-
-}
 
 $(document).ready(function () {
     var remove_buttons = $('.remove-button');
@@ -99,7 +79,7 @@ $(document).ready(function () {
                 });
             });
             $('#table tbody').append(html_data);
-            addNumber();
+
             $('#form-table tbody').append(base);
 
         }

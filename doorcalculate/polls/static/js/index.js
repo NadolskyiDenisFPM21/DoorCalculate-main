@@ -3,6 +3,8 @@ import { getCookie } from './cookies.js';
 import { attachChangeEvent } from './select_model.js'
 
 
+
+
 function full_price() {
     var fullPrice = 0.0;
     var discountVal = parseFloat($('#discount-value').val());
@@ -104,7 +106,6 @@ $(document).ready(function () {
 
         }
         attachChangeEvent();
-
         full_price();
     });
 

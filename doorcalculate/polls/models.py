@@ -52,3 +52,5 @@ class Table(models.Model):
     client_contact = models.CharField(max_length=100)
     client_email = models.EmailField(max_length=254)
     note = models.TextField()
+    price_type = models.TextField(default="RRC")
+    is_set_price_type = models.BooleanField(default=False)

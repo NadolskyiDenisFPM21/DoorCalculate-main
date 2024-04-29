@@ -14,5 +14,6 @@ urlpatterns = [
     path('get_back_width/', views.get_back_width, name='get_back_width'),
     path('create_excel_specification/<int:order_id>/', views.create_excel_specification, name='create_excel_specification'),
     path('create_pdf_specification/<int:order_id>/', views.create_pdf_specification, name='create_pdf_specification'),
+    path('set_price_type/<int:order_id>/', views.set_price_type, name='set_price_type')
 
 ]

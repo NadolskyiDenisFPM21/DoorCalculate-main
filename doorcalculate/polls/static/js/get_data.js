@@ -1,5 +1,10 @@
 $(document).change(function () {
 
+
+
+
+
+
     $('.get-data').change(function () {
         if ($('#select-width').val() && $('#select-height').val() && $('#select-frame').val()) {
             var json_req = {
@@ -7,6 +12,7 @@ $(document).change(function () {
                 'width': $('#select-width').val(),
                 'height': $('#select-height').val(),
                 'frame': $('#select-frame').val(),
+                'order_id': $('#order_id').text(),
             };
             $.ajax({
                 url: "/get_door_info/",
@@ -15,12 +21,7 @@ $(document).change(function () {
                 success: function (data) {
                     var price = $('#price');
                     price.empty();
-                    if ($('#price-type') && $('#price-type').val() == 'diller') {
-                        price.append(data[0].diller_price);
-                    } else {
-                        price.append(data[0].price);
-                    }
-
+                    price.append(data[0].price);
                     var al_band_canv = $('#al-band-canvas');
                     al_band_canv.empty();
                     al_band_canv.append(data[0].al_banding_canvas ? '+' : '-');
@@ -40,7 +41,6 @@ $(document).change(function () {
                     } else {
                         furn_color.append("Мат.хром");
                     }
-
                 }
             });
 
